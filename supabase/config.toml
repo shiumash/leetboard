@@ -1,0 +1,2 @@
+[api]
+  cors = ["https://localhost:8080"]

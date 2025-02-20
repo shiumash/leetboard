@@ -21,6 +21,8 @@ const Navbar = () => {
   const { user } = useAuth();
   const { toast } = useToast();
 
+  console.log('Current User: ', user)
+
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) {

@@ -46,19 +46,29 @@ const ContestDetails = () => {
           .from('contest_participants')
           .select(`
             user_id,
+
             profiles!inner (
               id,
               username,
               leetcode_username,
               created_at,
-              updated_at
+              
             )
           `)
           .eq('contest_id', id);
 
         if (participantsResponse.error) throw participantsResponse.error;
 
-        const profiles = participantsResponse.data.map(p => p.profiles) as Profile[];
+        // Fix the profiles extraction
+        const profiles: Profile[] = participantsResponse.data.map(p => ({
+          id: p.id,
+          username: p.username,
+          leetcode_username: p.leetcode_username,
+          created_at: p.profiles.created_at,
+          updated_at: p.profiles.updated_at
+        }));
+
+        console.log('Fetched profiles: ', profiles);
         setParticipants(profiles);
 
         // Fetch LeetCode stats for each participant
@@ -113,11 +123,10 @@ const ContestDetails = () => {
       const userStats = stats[participant.id];
       if (!userStats) return null;
 
-      // Calculate score: Easy(1) + Medium(3) + Hard(5)
       const score = 
         userStats.easy_solved + 
-        userStats.medium_solved * 3 + 
-        userStats.hard_solved * 5;
+        userStats.medium_solved + 
+        userStats.hard_solved;
 
       return {
         rank: index + 1,

@@ -1,4 +1,3 @@
-
 export interface Profile {
   id: string;
   username: string;
@@ -7,19 +6,28 @@ export interface Profile {
   updated_at: string;
 }
 
+import { PostgrestError } from '@supabase/supabase-js'
+
 export interface Contest {
-  id: string;
-  title: string;
-  description: string | null;
-  duration_days: number;
-  max_participants: number;
-  forfeit: string | null;
-  status: 'active' | 'completed';
-  created_by: string;
-  start_date: string;
-  end_date: string;
-  created_at: string;
-  updated_at: string;
+  id: string
+  title: string
+  description: string | null
+  duration_days: number
+  max_participants: number
+  forfeit: string | null
+  status: 'active' | 'completed'
+  owner_id: string  // Changed from created_by to match DB
+  start_date: string
+  end_date: string
+  created_at: string
+  updated_at: string
+}
+
+export type ContestError = PostgrestError | null
+
+export type ContestResponse = {
+  data: Contest | null
+  error: PostgrestError | null
 }
 
 export interface ContestParticipant {

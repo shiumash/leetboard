@@ -12,30 +12,45 @@ export type Json =
         contests: {
           Row: {
             id: string
-            created_at: string
             title: string
-            description: string
+            description: string | null
+            duration_days: number
+            max_participants: number
+            forfeit: string | null
+            status: 'active' | 'completed'
+            owner_id: string
             start_date: string
             end_date: string
-            owner_id: string
+            created_at: string
+            updated_at: string
           }
           Insert: {
             id?: string
-            created_at?: string
             title: string
-            description: string
+            description?: string | null
+            duration_days: number
+            max_participants: number
+            forfeit?: string | null
+            status?: 'active' | 'completed'
+            owner_id: string
             start_date: string
             end_date: string
-            owner_id: string
+            created_at?: string
+            updated_at?: string
           }
           Update: {
             id?: string
-            created_at?: string
             title?: string
-            description?: string
+            description?: string | null
+            duration_days?: number
+            max_participants?: number
+            forfeit?: string | null
+            status?: 'active' | 'completed'
+            owner_id?: string
             start_date?: string
             end_date?: string
-            owner_id?: string
+            created_at?: string
+            updated_at?: string
           }
         }
         contest_participants: {
